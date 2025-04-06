@@ -2,13 +2,21 @@ import { defineConfig } from '@tarojs/cli'
 
 import devConfig from './dev'
 import prodConfig from './prod'
+import path from "node:path";
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig(async (merge, { command, mode }) => {
   const baseConfig = {
     projectName: 'easy-english-front',
-    date: '2025-4-6',
-    designWidth: 750,
+    date: '2025-4-06',
+    designWidth(input) {
+      // 配置 NutUI 375 尺寸
+      if (input?.file?.replace(/\\+/g, '/').indexOf('@nutui') > -1) {
+        return 375
+      }
+      // 全局使用 Taro 默认的 750 尺寸
+      return 750
+    },
     deviceRatio: {
       640: 2.34 / 2,
       750: 1,
@@ -17,7 +25,7 @@ export default defineConfig(async (merge, { command, mode }) => {
     },
     sourceRoot: 'src',
     outputRoot: 'dist',
-    plugins: [],
+    plugins: ['@tarojs/plugin-html','@tarojs/plugin-http'],
     defineConstants: {
     },
     copy: {
@@ -27,7 +35,10 @@ export default defineConfig(async (merge, { command, mode }) => {
       }
     },
     framework: 'react',
-    compiler: 'webpack5',
+    // compiler: 'webpack5', https://github.com/NervJS/taro/issues/14003
+    compiler: {
+      prebundle: { enable: false },
+    },
     cache: {
       enable: false // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
     },
@@ -40,9 +51,9 @@ export default defineConfig(async (merge, { command, mode }) => {
           }
         },
         cssModules: {
-          enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+          enable: true, // Default is false, if you want to use the css modules function, set it to true https://docs.taro.zone/en/docs/3.x/css-modules/
           config: {
-            namingPattern: 'module', // 转换模式，取值为 global/module
+            namingPattern: 'module', // The conversion mode, which takes the value global/module, is explained in detail below
             generateScopedName: '[name]__[local]___[hash:base64:5]'
           }
         }
@@ -81,7 +92,14 @@ export default defineConfig(async (merge, { command, mode }) => {
           enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
         }
       }
-    }
+    },
+    alias: {
+      '@/components': path.resolve(__dirname, '..', 'src/components'),
+      '@/extensions': path.resolve(__dirname, '..', 'src/extensions'),
+      '@/packages': path.resolve(__dirname, '..', 'src/packages'),
+      '@/slices': path.resolve(__dirname, '..', 'src/redux/slices'),
+      '@/apis': path.resolve(__dirname, '..', 'src/api'),
+    },
   }
 
 

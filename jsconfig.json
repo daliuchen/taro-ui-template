@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["./src/components/*"],
+      "@/extensions/*": ["./src/extensions/*"],
+      "@/packages/*": ["./src/packages/*"],
+      "@/slices/*": ["./src/redux/slices/*"],
+      "@/apis/*": ["./src/api/*"]
+    }
+  }
+}
