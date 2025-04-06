@@ -61,7 +61,8 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^9.2.0",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "taro-ui": "^3.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",
@@ -86,4 +87,3 @@
     "webpack": "5.91.0"
   }
 }
-

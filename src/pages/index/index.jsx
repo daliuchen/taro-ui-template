@@ -3,6 +3,7 @@ import Taro, { useLoad } from '@tarojs/taro'
 import './index.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {decrement, decrementAsync, increment, incrementAsync} from "@/slices/countSlice";
+import { AtButton } from 'taro-ui'
 
 export default function Index () {
   const dispatch = useDispatch()
@@ -36,7 +37,7 @@ export default function Index () {
       <Text>Welcome to Taro!</Text>
       <Text>redux</Text>
       <View>
-        <Button onClick={onClickSyncPlus}>sync +</Button>
+        <AtButton type='primary' onClick={onClickSyncPlus}>sync +</AtButton>
         <Text>{count}</Text>
         <Button onClick={onClickSyncMinus}>sync -</Button>
         {
